@@ -1,23 +1,80 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+
+import MainLayout from "@/layout/main";
+import ListLayout from "@/layout/list";
+
+import Home from "@/views/home";
+import Protect from "@/views/protect";
+import Analysis from "@/views/analysis";
+import Study from "@/views/study";
+
+import ListNews from "@/views/list/news";
+import ListExpert from "@/views/list/expert";
+import ListOrg from "@/views/list/org";
+import ListPaper from "@/views/list/paper";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "home",
-    component: Home
+    name: "mainLayout",
+    component: MainLayout,
+    redirect: "/home",
+    children: [
+      {
+        path: "/home",
+        name: "home",
+        component: Home
+      },
+      {
+        path: "/protect",
+        name: "protect",
+        component: Protect
+      },
+      {
+        path: "/analysis",
+        name: "analysis",
+        component: Analysis
+      },
+      {
+        path: "/study",
+        name: "study",
+        component: Study
+      }
+    ]
   },
   {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+    path: "/list",
+    name: "listLayout",
+    component: ListLayout,
+    children: [
+      {
+        path: "news/:type",
+        name: "listNews",
+        props: true,
+        component: ListNews
+      },
+      {
+        path: "expert/:type",
+        name: "listExpert",
+        props: true,
+        component: ListExpert
+      },
+      {
+        path: "org/:type",
+        name: "listOrg",
+        props: true,
+        component: ListOrg
+      },
+      {
+        path: "paper/:type",
+        name: "listPaper",
+        props: true,
+        component: ListPaper
+      }
+    ]
   }
 ];
 
